@@ -2,24 +2,25 @@ name: Build Router
 on:
   pull_request:
     branches:
-      - setup-site
+      - docusaurus-v3
     paths:
-      - 'docs/**'
-      - 'src/**'
-      - 'blog/**'
-      - 'docusaurus.config.js'
+      - 'website/docs/**'
+      - 'website/src/**'
+      - 'website/blog/**'
+      - 'website/docusaurus.config.js'
+      - 'website/crowdin.yaml'
       - '.github/workflows/deploy.yml'
   push:
     branches:
-      - setup-site
+      - docusaurus-v3
     paths:
-      - 'docs/**'
-      - 'src/**'
-      - 'blog/**'
-      - 'docusaurus.config.js'
+      - 'website/docs/**'
+      - 'website/src/**'
+      - 'website/blog/**'
+      - 'website/docusaurus.config.js'
       - '.github/workflows/deploy.yml'
-      - 'static/**'
-      - 'sidebars.js'
+      - 'website/static/**'
+      - 'website/sidebars.js'
 
 env:
   NODE_OPTIONS: --max_old_space_size=4096
@@ -33,23 +34,42 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      # Set up Node.js without specifying working-directory
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: yarn
+          node-version: 20
+          cache: npm
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      # Install dependencies (npm ci) in the website directory
+      - name: Install dependencies (npm ci)
+        run: |
+          npm ci
+        working-directory: website
 
+      # Add Crowdin sync step to download translations before building
+      - name: Sync translations from Crowdin
+        run: |
+          npm run crowdin:sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+        working-directory: website
+
+      # Test build website in the website directory
       - name: Test build website
-        run: yarn build
+        run: |
+          npm run build
+        working-directory: website
 
+      # Upload build artifact
       - name: Upload build artifact
         if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: build
+          path: website/build
 
   deploy:
     name: Deploy to GitHub Pages
@@ -67,10 +87,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-pages
-          path: build
+          path: website/build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: website/build

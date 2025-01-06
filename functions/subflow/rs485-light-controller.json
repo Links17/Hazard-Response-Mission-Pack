@@ -1,0 +1,288 @@
+[
+    {
+        "id": "61d68b31136dfa92",
+        "type": "subflow",
+        "name": "rs485 light controller - control light V0.0.2",
+        "info": "### Light Controller Node Overview\n\nThe Light Controller Node is designed to control the state of a light based on three environment variables: `Light Color`, `Light Mode`, and `Product model`. The node converts these settings into corresponding Modbus commands for further processing.\n\n### Environment Variables\n\n- **Light Color**: Defines the color of the light.\n  - Valid options: `red`, `green`, `yellow`, `blue`\n- **Light Mode**: Defines the mode of the light.\n  - Valid options: `on`, `blink`, `flashing`, `off`\n- **Product Model**: Defines the type of light product.\n  - Valid options: `3 Color Light with Sound (Round) [User Manual](https://files.seeedstudio.com/wiki/Mission-Pack/peripheral/3-Color-Light-with-Sound-%28Round%29.pdf)`, `4 Color Light Only (Rectangle)[User Manual](https://files.seeedstudio.com/wiki/Mission-Pack/peripheral/4-Color-Light-Only-%28Rectangle%29.pdf)`\n\n### Output Values\n\nThe node maps the combinations of `Light Color`, `Light Mode`, and `Product Model` to specific hexadecimal values, which are then converted to decimal values and output through the node's message payload. These values vary depending on the product model:\n\n#### 3 Color Light with Sound (Round)\n\n| LIGHT_COLOR | LIGHT_MODE | Hex Value | Decimal Value |\n|-------------|-------------|-----------|---------------|\n| red         | blink       | 0x21      | 33            |\n| red         | flashing    | 0x31      | 49            |\n| red         | on          | 0x11      | 17            |\n| red         | off         | 0x60      | 96            |\n| green       | blink       | 0x23      | 35            |\n| green       | flashing    | 0x33      | 51            |\n| green       | on          | 0x13      | 19            |\n| green       | off         | 0x60      | 96            |\n| yellow      | blink       | 0x22      | 34            |\n| yellow      | flashing    | 0x32      | 50            |\n| yellow      | on          | 0x12      | 18            |\n| yellow      | off         | 0x60      | 96            |\n\n#### 4 Color Light Only (Rectangle)\n\n| LIGHT_COLOR | LIGHT_MODE | Address Value |\n|-------------|-------------|---------------|\n| red         | on          | 0             |\n| red         | blink       | 8             |\n| red         | off         | 4             |\n| green       | on          | 1             |\n| green       | blink       | 9             |\n| green       | off         | 4             |\n| blue        | on          | 2             |\n| blue        | blink       | 10            |\n| blue        | off         | 4             |\n\n### How to Use\n\n1. **Set Environment Variables**:\n   - Define `Light Color`, `Light Mode`, and `Product Model` in the node properties.\n\n2. **Deploy the Node**:\n   - Ensure the node is deployed and integrated into your main flow.\n\n3. **Trigger the Node**:\n   - Use an Inject node to set and trigger the environment variables.\n\n4. **Check Output**:\n   - The output will be a Modbus command with the relevant configuration, viewable through a Debug node.\n\n### Example Flow\n\n1. **Inject Node**: Use to set and trigger the environment variables.\n2. **Light Controller Node**: Insert the Light Controller Node.\n3. **Debug Node**: Connect to the node output to see the result.\n\nConfigure the Inject node to set `Light Color`, `Light Mode`, and `Product Model`. Deploy the flow, trigger the inject node, and view the output in the debug panel.\n\n",
+        "category": "※rs485-light-controller",
+        "in": [
+            {
+                "x": 180,
+                "y": 220,
+                "wires": [
+                    {
+                        "id": "52c163c50fe2ee6d"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 920,
+                "y": 260,
+                "wires": [
+                    {
+                        "id": "df75ccc564c4e661",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "----- Device Settings -----",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "none"
+                }
+            },
+            {
+                "name": "modbus-client",
+                "type": "modbus-client",
+                "value": "ff55020100020001",
+                "ui": {
+                    "icon": "font-awesome/fa-server",
+                    "label": {
+                        "zh-CN": "*Server",
+                        "en-US": "*Server"
+                    },
+                    "type": "conf-types"
+                }
+            },
+            {
+                "name": "PRODUCT_MODEL",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "label": {
+                        "zh-CN": "*Product model",
+                        "en-US": "*Product model"
+                    },
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "en-US": "4 Color Light Only (Rectangle)"
+                                },
+                                "v": "type_b"
+                            },
+                            {
+                                "l": {
+                                    "zh-CN": "Type A",
+                                    "en-US": "4 Color Light with Sound (Round)"
+                                },
+                                "v": "type_a"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "----- Light Mode -----",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "type": "none"
+                }
+            },
+            {
+                "name": "LIGHT_MODE",
+                "type": "str",
+                "value": "on",
+                "ui": {
+                    "label": {
+                        "zh-CN": "*Light mode",
+                        "en-US": "*Light mode"
+                    },
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "zh-CN": "On",
+                                    "en-US": "On"
+                                },
+                                "v": "on"
+                            },
+                            {
+                                "l": {
+                                    "zh-CN": "Blink",
+                                    "en-US": "Blink"
+                                },
+                                "v": "blink"
+                            },
+                            {
+                                "l": {
+                                    "zh-CN": "Flashing",
+                                    "en-US": "Flashing"
+                                },
+                                "v": "flashing"
+                            },
+                            {
+                                "l": {
+                                    "zh-CN": "Off",
+                                    "en-US": "Off"
+                                },
+                                "v": "off"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "LIGHT_COLOR",
+                "type": "str",
+                "value": "red",
+                "ui": {
+                    "label": {
+                        "zh-CN": "*Light color",
+                        "en-US": "*Light color"
+                    },
+                    "type": "select",
+                    "opts": {
+                        "opts": [
+                            {
+                                "l": {
+                                    "zh-CN": "Red",
+                                    "en-US": "Red"
+                                },
+                                "v": "red"
+                            },
+                            {
+                                "l": {
+                                    "zh-CN": "Green",
+                                    "en-US": "Green"
+                                },
+                                "v": "green"
+                            },
+                            {
+                                "l": {
+                                    "zh-CN": "Yellow",
+                                    "en-US": "Yellow"
+                                },
+                                "v": "yellow"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {
+            "module": "lgiht-controller-yx75r-ryg",
+            "version": "0.0.2",
+            "author": "Peter Pan",
+            "desc": "This is a modbus Light Controller for light built-in Mission Pack",
+            "license": "MIT"
+        },
+        "color": "#B8EA4F",
+        "icon": "node-red/light.svg",
+        "status": {
+            "x": 530,
+            "y": 340,
+            "wires": [
+                {
+                    "id": "de52d590953c98c7",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "de52d590953c98c7",
+        "type": "status",
+        "z": "61d68b31136dfa92",
+        "name": "",
+        "scope": null,
+        "x": 240,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1aac682eea8590eb",
+        "type": "catch",
+        "z": "61d68b31136dfa92",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 230,
+        "y": 420,
+        "wires": [
+            [
+                "7a63f74387974b8f"
+            ]
+        ]
+    },
+    {
+        "id": "7a63f74387974b8f",
+        "type": "debug",
+        "z": "61d68b31136dfa92",
+        "name": "rs485 light controller - control light",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "df75ccc564c4e661",
+        "type": "modbus-flex-write",
+        "z": "61d68b31136dfa92",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "server": "${modbus-client}",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 710,
+        "y": 220,
+        "wires": [
+            [
+                "02954abddcbf5671"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "52c163c50fe2ee6d",
+        "type": "function",
+        "z": "61d68b31136dfa92",
+        "name": "LIGHT Modbus Address Converter",
+        "func": "// Function to normalize the environment variables (convert to lowercase)\nfunction normalizeEnvVar(value) {\n  if (value === true || value === false) {\n    return value;\n  }\n  return value ? value.toLowerCase() : \"\";\n}\n\n// Retrieve and normalize the environment variables\nvar lightColor = normalizeEnvVar(env.get(\"LIGHT_COLOR\"));\nvar lightMode = normalizeEnvVar(env.get(\"LIGHT_MODE\"));\nvar lightType = normalizeEnvVar(env.get(\"PRODUCT_MODEL\"));\n\nvar value = \"\";\n\n// Define the mapping\nif (lightType === \"type_a\") {\n  if (lightMode === \"off\") {\n    value = 0x60;\n  } else if (lightColor === \"red\") {\n    if (lightMode === \"blink\") {\n      value = 0x21;\n    } else if (lightMode === \"flashing\") {\n      value = 0x31;\n    } else if (lightMode === \"on\") {\n      value = 0x11;\n    } else {\n      node.warn(\"Please check your configuration\");\n    }\n  } else if (lightColor === \"green\") {\n    if (lightMode === \"blink\") {\n      value = 0x23;\n    } else if (lightMode === \"flashing\") {\n      value = 0x33;\n    } else if (lightMode === \"on\") {\n      value = 0x13;\n    } else {\n      node.warn(\"Please check your configuration\");\n    }\n  } else if (lightColor === \"yellow\") {\n    if (lightMode === \"blink\") {\n      value = 0x22;\n    } else if (lightMode === \"flashing\") {\n      value = 0x32;\n    } else if (lightMode === \"on\") {\n      value = 0x12;\n    } else {\n      node.warn(\"Please check your configuration\");\n    }\n  } else {\n    node.warn(\"Please check your configuration\");\n  }\n  // Convert the hexadecimal value to decimal\n  var decimalValue = value;\n  msg.payload = {\n    value: decimalValue,\n    fc: 6,\n    unitid: 1,\n    address: 194,\n    quantity: 1, // Number of coils/registers to write (for single coil, it's 1)\n  };\n} else if (lightType === \"type_b\") {\n  if (lightMode === \"off\") {\n    value = 4;\n  } else if (lightColor === \"red\") {\n    if (lightMode === \"on\") {\n      value = 0; // Always_On red light\n    } else if (lightMode === \"blink\") {\n      value = 8; // Blink red light\n    } else {\n      node.warn(\"Please check your configuration\");\n    }\n  } else if (lightColor === \"green\") {\n    if (lightMode === \"on\") {\n      value = 1; // Always_On green light\n    } else if (lightMode === \"blink\") {\n      value = 9; // Blink green light\n    } else {\n      node.warn(\"Please check your configuration\");\n    }\n  } else if (lightColor === \"blue\") {\n    if (lightMode === \"on\") {\n      value = 2; // Always_On green light\n    } else if (lightMode === \"blink\") {\n      value = 10; // Blink green light\n    } else {\n      node.warn(\"Please check your configuration\");\n    }\n  } else {\n    node.warn(\"Please check your configuration\");\n  }\n\n  // Set the payload for Modbus communication\n  msg.payload = {\n    fc: 5, // Function code for \"Write Single Coil\"\n    unitid: 1, // Modbus Unit ID\n    address: value, // Starting address (adjust based on your setup)\n    quantity: 1, // Number of coils/registers to write (for single coil, it's 1)\n  };\n} else {\n  node.warn(\"Please check your configuration\");\n}\n\n// // Set the output message\n// if (notification) {\n//     msg.payload = notification;\n// } else {\n// }\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 220,
+        "wires": [
+            [
+                "df75ccc564c4e661"
+            ]
+        ]
+    },
+    {
+        "id": "02954abddcbf5671",
+        "type": "modbus-response",
+        "z": "61d68b31136dfa92",
+        "name": "",
+        "registerShowMax": 20,
+        "x": 990,
+        "y": 220,
+        "wires": []
+    }
+]
