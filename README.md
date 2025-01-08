@@ -2,11 +2,23 @@
 
 # Hazard Response Mission Pack
 
+<p align="center">
+An open-source AIoT solution designed to efficiently manage and mitigate hazard scenarios.
+</p>
+
 The Hazard Response Mission Pack is an open-source AIoT solution designed to efficiently manage and mitigate hazard scenarios. This compact system combines a range of technologies, including sensor networks and edge computing, to enable effective remote sensing, data transmission, processing, inference, and analysis.
 
 This initiative is not a market-ready product but rather a collaborative effort between Seeed and a global community of practitioners committed to using technology to tackle real-world challenges. We welcome contributions from individuals and organizations to explore the limitless potential of “tech for hazard response.”
 
 </div>
+
+<br>
+<p align="center">
+<a href="https://seeed-studio.github.io/Hazard-Response-Mission-Pack/">📚 Documentation</a> |
+<a href="https://github.com/Seeed-Studio/Hazard-Response-Mission-Pack/tree/main/functions">🧑‍💻 Code Snippets</a> |
+<a href="https://github.com/Seeed-Studio/Smarter-Spaces-Solutions">✨ Smarter Spaces Solutions</a>
+</p>
+<br>
 
 - **Join the Mission Pack Beta Test** for early access: [Sign Up Here](https://forms.gle/UXpAJX5wNcLd7CWJA)
 - **Contact Us for Cooperation**: [solution@seeed.cc](mailto:solution@seeed.cc)
@@ -14,15 +26,11 @@ This initiative is not a market-ready product but rather a collaborative effort 
 
 ![hazard-post](https://github.com/user-attachments/assets/61f7f9af-0603-4ec1-8a16-d00a3b78a8f9)
 
-## Documentation Overview
+## Features
 
-### 1. ⭐️ **[Jumpstart Guide](./docs/jumpstart-usage/README.md)**
-
-Get started quickly with a hands-on introduction to the Mission Pack's features and capabilities.
-
-### 2. ⭐️ **[Integrator Handbook](./docs/integrator-handbook/README.md)**
-
-A comprehensive guide for integrators, providing detailed instructions on how to customize and deploy the Mission Pack effectively.
+- **Digital Off-grid communicator** - Mesh-style long-range network, lightweight device. Works standalone or with phone pairing.
+- **Powerful Basecamp computer** - Onsite edge computing with communication gateway. Features no-code software and HMI.
+- **Intelligent Hazard Sensors** - Includes weather station, long-range tracker, and AI sensors. Ideal for hazard monitoring.
 
 ## Node-RED Flows
 
