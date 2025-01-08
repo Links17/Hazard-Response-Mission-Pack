@@ -1,21 +1,12 @@
-<!-- TOC -->
-
-- [Hardware Connection](#hardware-connection)
-    - [Unpack and Inspect All Components](#unpack-and-inspect-all-components)
-    - [Set Up LoRaWAN Nodes](#set-up-lorawan-nodes)
-    - [Set Up Meshtastic Nodes](#set-up-meshtastic-nodes)
-    - [Set Up Vision Module](#set-up-vision-module)
-    - [Assemble Basecamp](#assemble-basecamp)
-- [Conclusion](#conclusion)
-- [Troubleshooting](#troubleshooting)
-
-<!-- /TOC -->
+---
+slug: /hardware-connection
+---
 
 ## Hardware Connection
 
 In this section, you'll get through the process of physically setting up the hardware components of the **Hazard Response Mission Pack**. Follow these steps to ensure all devices are properly connected and ready for operation.
 
-![system diagram](/assets/img/v2-system-diagram.png)
+<!-- ![system diagram](/website/assets/img/v2-system-diagram.png) -->
 
 ### Unpack and Inspect All Components
 
@@ -46,7 +37,7 @@ In **Mission Pack V0.2**, the Meshtastic nodes are powered by the [**Tracker T10
 
 To get started with the **T1000-E Tracker**, you need to ensure it is fully charged. Unlike the LoRaWAN version, which can last nearly two months on a single charge, the T1000-E requires regular charging due to its enhanced functionality and sensor capabilities. Ensure it is adequately powered before deployment to maintain consistent tracking performance.
 
-Next step: [Configure Meshtastic network](./software-setup.md#meshtastic)
+Next step: [Configure Meshtastic network](/software-setup#meshtastic)
 
 ### Set Up Vision Module
 
@@ -84,7 +75,7 @@ The **R1000 ReComputer** serves as the core of your system, managing edge comput
 
 ##### Step 1.1: Install the LoRaWAN Gateway Chip
 
-> [!Note] 
+> [!Note]
 > You can skip this step if your R1000 ReComputer is equipped with the LoRaWAN Gateway chip ([Wio-WM1302 LoRaWAN Gateway](https://www.seeedstudio.com/WM1302-LoRaWAN-Gateway-Module-SPI-EU868-p-4889.html)).
 
 Insert the **WM1302 module** into the designated slot inside the R1000 ReComputer, as shown in the image below. Ensure it is firmly seated in the fixed position.
@@ -97,7 +88,6 @@ For more details about the **RS485** configuration on the R1000, refer to the [R
 
 > [!Note]  
 > The power connection for the system is also configured during this step.
-
 
 ##### Step 1.3: Connect the HDMI 10" Screen
 
@@ -127,7 +117,7 @@ With the hardware setup complete, proceed to the next section to configure the s
 
 ## Conclusion
 
-In this page, you've learn how to assembly the device for the Mission Pack. In next page [Software Setup](./software-setup.md) you are going to setup all the configurations and parameters that system needs.
+<!-- In this page, you've learn how to assembly the device for the Mission Pack. In next page [Software Setup](/website/docs/integrator-handbook/system-diagram/software-setup.md) you are going to setup all the configurations and parameters that system needs. -->
 
 ## Troubleshooting
 

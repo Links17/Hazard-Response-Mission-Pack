@@ -1,0 +1,31 @@
+PeterPan:
+  name: Peter Pan
+  title: Engineer
+  url: https://www.github.com/peterpanstechland
+  image_url: https://github.com/peterpanstechland.png
+  page: true
+  socials:
+    github: peterpanstechland
+    linkedin: shi-pan
+
+SpencerYan:
+  name: Spencer Yan
+  title: Application Engineer
+  url: https://www.github.com/love4yzp
+  image_url: https://github.com/love4yzp.png
+  page: 
+    permalink: '/spencer'
+  socials:
+    github: love4yzp
+    bluesky: love4yzp.bsky.social
+    x: love4yzp
+    linkedin: spencer2077
+
+EllieCai:
+  name: Ellie Cai
+  title: Brand & Community Manager @ Seeed
+  url: https://www.linkedin.com/in/ying-cai-6b8b191b1
+  image_url: https://github.com/github.png
+  page: true
+  socials:
+    linkedin: ying-cai-6b8b191b1
